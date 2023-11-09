@@ -51,3 +51,6 @@ attribute "setup/download_dir",
   :description => "Location where the distribution binaries will be downloaded. (Default: /home/vagrant/dist",
           :type => "string"
 
+attribute "setup/ignore_files_regex",
+  :description => "Regular expression of file to ignore downloading ie '.*hops-schemas.*|.*kube.*'",
+  :type => "string"

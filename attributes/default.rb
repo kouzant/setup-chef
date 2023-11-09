@@ -23,4 +23,6 @@ default['kagent']['enabled']                       = "false"
 
 default['setup']['user']                           = "vagrant" 
 default['setup']['group']                          = "vagrant" 
-default['setup']['download_dir']                   = "/home/vagrant/dist" 
+default['setup']['download_dir']                   = "/home/vagrant/dist"
+# regex for files to ignore
+default['setup']['ignore_files_regex']             = ".+hops-schemas.+|.+kube.+"

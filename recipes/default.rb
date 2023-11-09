@@ -26,9 +26,13 @@ def recursiveFlat(m)
   ret_value
 end
 
+ir = node['setup']['ignore_files_regex']
 res = recursiveFlat(node)
 res.each do |v|
   if v =~ /#{node['download_url']}.+/ || v =~ /https:\/\/repo.hops.works\/master\/.+/
+
+    next if !ir.empty? && v.match(/#{ir}/)
+
     # want to match 'kube/docker-images/1.4.1 -  but not 'kube/docker-images/registry_image.tar'
     # if v =~ /kube\/docker-images\/[0-9]*.+/ && v =~ /#{node['install']['version']}.+/
     if v =~ /#{node['download_url']}\/kube\/docker-images\/.*/
