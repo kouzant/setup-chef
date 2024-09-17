@@ -31,25 +31,6 @@ res.each do |v|
   if v =~ /#{node['download_url']}.+/ || v =~ /https:\/\/repo.hops.works\/master\/.+/
     # want to match 'kube/docker-images/1.4.1 -  but not 'kube/docker-images/registry_image.tar'
     # if v =~ /kube\/docker-images\/[0-9]*.+/ && v =~ /#{node['install']['version']}.+/
-    if v =~ /#{node['download_url']}\/kube\/docker-images\/.*/
-      bash "download-kube-#{v}" do
-        user node['setup']['user']
-        group node['setup']['group']
-        cwd node['setup']['download_dir']
-        code <<-EOH
-        wget --mirror --no-parent -X "*" -N --reject "index.html*" --accept-regex ".*kube\/docker-images\/#{node['install']['version']}\/*" -e robots=off --no-host-directories #{v}
-      EOH
-      end
-    else
-      bash "download-#{v}" do
-        user node['setup']['user']
-        group node['setup']['group']
-        cwd node['setup']['download_dir']
-        code <<-EOH
-        wget --mirror --no-parent -X "*" -N --reject "index.html*" --reject-regex ".*kube\/docker-images\/[0-9]+.*" -e robots=off --no-host-directories #{v}
-      EOH
-      end
-    end
-    
+    File.open("/tmp/download_links", "a") { |file| file.write("#{v}\n")}
   end
 end
